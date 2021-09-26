@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\VoterController;
+use App\Http\Controllers\VotingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('voter.guest')->group(function() {
+    Route::get('/', [VoterController::class,'index'])->name('login');
+    Route::post('/', [VoterController::class,'login']);    
 });
+
+Route::middleware('voter.auth')->group(function() {
+    Route::get('logout', [VoterController::class,'logout'])->name('logout');
+    Route::get('voting',[VotingController::class,'index'])->name('voting');
+    Route::post('voting/submit',[VotingController::class,'submit'])->name('submit.ballot');
+    Route::post('voting/preview',[VotingController::class,'preview'])->name('preview.ballot');
+});
+
