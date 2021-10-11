@@ -44,7 +44,7 @@ class VotingController extends Controller
         // Finally insert into votes db
         Vote::insert($votes);
 
-        return redirect()->route('voting');
+        return redirect()->route('voting')->withMessage('Your vote has been submitted.');
     }
 
     /**

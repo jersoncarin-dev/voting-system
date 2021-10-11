@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ $setting->election_title }}</title>
+  <title>ADMIN - SSG VOTING</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -19,26 +19,31 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="{{ url('/') }}" class="h1"><b>SSG</b> VOTING</a>
+      <a href="{{ url('/') }}" class="h1"><b>SSG</b> ADMIN</a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Sign in to start voting</p>
+      <p class="login-box-msg">Sign in to start administer</p>
 
-      <form action="{{ url('/') }}" method="post">
+      <form action="{{ route('admin.login') }}" method="post">
         @csrf
-        <div class="alert alert-warning" role="alert">
-          {!! $setting->assistance_message !!}
-        </div>
         @if(Session::has('message'))
           <div class="alert alert-danger" role="alert">
               {{ Session::get('message') }}
           </div>
         @endif
         <div class="input-group mb-3">
-          <input type="number" name="lrn" class="form-control" placeholder="Learner Reference Number">
+          <input type="text" name="username" class="form-control" placeholder="Username">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" name="password" class="form-control" placeholder="Password">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
             </div>
           </div>
         </div>

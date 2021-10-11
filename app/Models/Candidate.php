@@ -15,4 +15,14 @@ class Candidate extends Model
     {
         return $this->belongsTo(Voter::class);
     }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
+    }
 }

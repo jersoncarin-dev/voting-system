@@ -14,6 +14,7 @@ class VoterController extends Controller
         $setting = Setting::first();
         return view('login',compact('setting'));
     }
+
     /**
      * Attempt to login using Learning Reference Number
      */
@@ -25,12 +26,17 @@ class VoterController extends Controller
 
         if(!$setting->can_vote) {
             return redirect('/')->withMessage($setting->election_message);
-        }
+        } 
 
         if(!$voter) {
-            return redirect('/')->withMessage('Invalid Learner Reference Number');
+            return redirect('/')->withMessage('Invalid Learner Reference Number.');
         }
 
+        // Determine when the voter is being blocked
+        if($voter->is_blocked) {
+            return redirect('/')->withMessage('Learner Reference Number has been blocked.');
+        }
+        
         Auth::login($voter);
 
         return redirect()->route('voting');

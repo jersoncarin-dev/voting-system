@@ -65,6 +65,9 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'voter.guest' => \App\Http\Middleware\IsVoterGuest::class,
-        'voter.auth' => \App\Http\Middleware\IsVoterAuthenticated::class
+        'voter.auth' => \App\Http\Middleware\IsVoterAuthenticated::class,
+        'admin.auth' => \App\Http\Middleware\AdminAuthorization::class,
+        'admin.guest' => \App\Http\Middleware\AdminUnauthorization::class,
+        'query.token' => \App\Http\Middleware\QueryTokenAuthorization::class
     ];
 }

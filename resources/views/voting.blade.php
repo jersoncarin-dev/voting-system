@@ -10,7 +10,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ url('plugins/fontawesome-free/css/all.min.css') }}">
   <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ url('static/css/adminlte.min.css') }}">
 </head>
@@ -57,15 +57,23 @@
         <!-- Main content -->
         <section class="content">
             @if(Session::has('message'))
-                <div class="alert alert-danger" role="alert">
-                    {{ Session::get('message') }}
+                @php
+                    $message = Session::get('message');
+                @endphp
+                <div @class([
+                    'alert',
+                    'alert-danger' => str_contains($message,'candidates'),
+                    'alert-success' => str_contains($message,'submitted')
+                ]) role="alert">
+                    <h4 class="m-0 p-0">{{ Session::get('message') }}</h4>
                 </div>
             @endif
-
             @if($vote->isNotEmpty())
-                <div class="alert alert-success" role="alert">
-                    You already voted for this election you can view your ballot below.
-                </div>
+                @if(!Session::has('message'))
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="m-0 p-0">You already voted for this election you can view your ballot below.</h4>
+                    </div>
+                @endif
                 @foreach($positions as $position)
                     @if($vote->contains('position_id',$position->id))
                         <div class="card rounded-0">
@@ -132,7 +140,7 @@
                         </div>
                         <div class="card-body pt-2">
                             <div class="d-flex flex-row">
-                                <div>You may select up to {{ $position->max_vote }} candidates</div>
+                                <div>You may select up to {{ $position->max_vote }} candidate{{ $position->max_vote > 1 ? 's' : '' }}.</div>
                                 <button type="button" class="ml-auto btn btn-xs bg-success reset" data-id="position_{{ $position->id }}">Reset</button>
                             </div>
                             @foreach($position->candidates as $candidate)

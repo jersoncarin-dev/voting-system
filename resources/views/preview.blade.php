@@ -7,14 +7,11 @@
             <div class="card-body pt-2">
                 @foreach($position->candidates as $candidate)
                     @if($position->relation_level == 0 || $candidate->voter->grade_level == auth()->user()->grade_level)
-                        <div class="d-flex px-3 m-1 mt-3 align-items-center">
+                        <div class="d-flex px-1 m-1 mt-3 align-items-center">
                             <div class="d-flex flex-row align-items-center">
-                                    <div class="img-voter mr-4">
-                                        <img class="img-fluid rounded-circle" src="{{ $candidate->profile_url }}" />
-                                    </div>
-                                    <div class="d-flex flex-column">
-                                        <h4>{{ $candidate->voter->name }}</h4>
-                                    </div>
+                                <div class="d-flex flex-column">
+                                    <h4>{{ $candidate->voter->name }}</h4>
+                                </div>
                             </div>
                             @if($position->max_vote > 1)
                                 @if($vote->contains('candidate_id',$candidate->id))
