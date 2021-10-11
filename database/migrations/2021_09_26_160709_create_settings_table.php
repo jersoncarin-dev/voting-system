@@ -17,8 +17,8 @@ class CreateSettingsTable extends Migration
             $table->id();
             $table->string('election_title');
             $table->boolean('can_vote')->default(false);
-            $table->string('election_message');
-            $table->string('assistance_message');
+            $table->longText('election_message');
+            $table->longText('assistance_message');
             $table->timestamps();
         });
     }
